@@ -55,7 +55,7 @@ class MovementCommand : public GameLib::InputCommand {
 public:
     const char* type() const override { return "MovementCommand"; }
     bool execute(float amount) override {
-		// apply slight curve
+        // apply slight curve
         if (amount < 0.1f && amount > -0.1f)
             amount = 0.0f;
         else if (amount > 0.5f)
@@ -136,28 +136,36 @@ int main(int argc, char** argv) {
     Hf::StopWatch stopwatch;
     double spritesDrawn = 0;
     double frames = 0;
-    GameLib::Actor player(new GameLib::SimpleInputComponent(),
-						  new GameLib::SimplePhysicsComponent(),
-						  new GameLib::SimpleGraphicsComponent());
-    player.speed = (float)graphics.getTileSizeX();
+    GameLib::Actor player(new GameLib::SimpleInputComponent(), new GameLib::BoxPhysicsComponent(), new GameLib::SimpleGraphicsComponent());
+    player.speed = (float)graphics.getTileSizeX() * 0.5;
     player.position.x = graphics.getCenterX() / (float)graphics.getTileSizeX();
     player.position.y = graphics.getCenterY() / (float)graphics.getTileSizeY();
     player.spriteId = 2;
 
-    //GameLib::MoveAction moveAction;
-    //moveAction.setActor(&player);
+    // GameLib::MoveAction moveAction;
+    // moveAction.setActor(&player);
 
     world.actors.push_back(&player);
 
-	GameLib::Actor randomPlayer(new GameLib::RandomInputComponent(),
-								new GameLib::SimplePhysicsComponent(),
+    GameLib::Actor randomPlayer(new GameLib::LinearInputComponent(),
+								new GameLib::SimplePhysicsComponent(), 
 								new GameLib::SimpleGraphicsComponent());
 
-	world.actors.push_back(&randomPlayer);
+    world.actors.push_back(&randomPlayer);
     randomPlayer.position.x = graphics.getCenterX() / (float)graphics.getTileSizeX();
     randomPlayer.position.y = graphics.getCenterY() / (float)graphics.getTileSizeY();
-    randomPlayer.spriteId = 1;
+    randomPlayer.spriteId = 256;
     randomPlayer.speed = (float)graphics.getTileSizeX();
+
+ //   for (int i = 0; i < 1; i++) {
+ //       GameLib::Actor randomPlayer(new GameLib::LinearInputComponent(), new GameLib::SimplePhysicsComponent(), new GameLib::SimpleGraphicsComponent());
+
+ //       world.actors.push_back(&randomPlayer);
+ //       randomPlayer.position.x = graphics.getCenterX() / (float)graphics.getTileSizeX();
+ //       randomPlayer.position.y = graphics.getCenterY() / (float)graphics.getTileSizeY();
+ //       randomPlayer.spriteId = 256;
+ //       randomPlayer.speed = (float)graphics.getTileSizeX();
+	//}
 
     float t0 = stopwatch.Stop_sf();
 
@@ -201,7 +209,7 @@ void testSprites(GameLib::Context& context, int spriteCount, int& spritesDrawn, 
     //    context.quitRequested = true;
     //}
 
-	// An arbitrary number roughly representing 4k at 8 layers, 32x32 sprites
+    // An arbitrary number roughly representing 4k at 8 layers, 32x32 sprites
     // constexpr int SpritesToDraw = 128 * 72 * 8;
     // An arbitrary number roughly representing HD at 4 layers, 32x32 sprites
     constexpr int SpritesToDraw = 5;

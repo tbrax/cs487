@@ -22,6 +22,8 @@ namespace GameLib {
 
         virtual char charDesc() const { return charDesc_; }
 
+		virtual void actorCollide() {}
+
         // Called whenever the object is introduced into the game
         virtual void beginPlay();
 
