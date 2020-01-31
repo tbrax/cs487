@@ -10,6 +10,7 @@ namespace GameLib {
     public:
         virtual ~InputComponent() {}
         virtual void update(Actor& actor) = 0;
+        virtual void collide() = 0;
     };
 
     class PhysicsComponent {
@@ -28,17 +29,36 @@ namespace GameLib {
     public:
         virtual ~SimpleInputComponent() {}
         void update(Actor& actor) override;
+        void collide() override;
     };
 
 	class RandomInputComponent : public InputComponent {
     public:
         virtual ~RandomInputComponent() {}
         void update(Actor& actor) override;
+        void collide() override;
+    };
+
+	class LinearInputComponent : public InputComponent {
+    public:
+        virtual ~LinearInputComponent() {}
+        void update(Actor& actor) override;
+        void collide() override;
+
+    private:
+        int moveDirection = 0;
     };
 
     class SimplePhysicsComponent : public PhysicsComponent {
     public:
         virtual ~SimplePhysicsComponent() {}
+
+        void update(Actor& actor, World& world);
+    };
+
+	class BoxPhysicsComponent : public PhysicsComponent {
+    public:
+        virtual ~BoxPhysicsComponent() {}
 
         void update(Actor& actor, World& world);
     };
