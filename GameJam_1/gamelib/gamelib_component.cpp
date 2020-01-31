@@ -31,17 +31,50 @@ namespace GameLib {
             newDirection = rand() % 4;
         }
         moveDirection = newDirection;
+        std::cout << newDirection << std::endl;
     }
     void LinearInputComponent::update(Actor& actor) {
-        if (moveDirection == 0) {
+        if (rand() % 150 == 1) {
+            moveDirection = rand() % 4;
+        }
+        float ground = 20;
+        float side = 39;
+        //std::cout << actor.position.x << std::endl;
+		if (moveDirection == 0) {
             actor.velocity.x = 1;
+            actor.velocity.y = 0;
         } else if (moveDirection == 1) {
             actor.velocity.x = -1;
+            actor.velocity.y = 0;
         } else if (moveDirection == 2) {
             actor.velocity.y = 1;
+            actor.velocity.x = 0;
         } else if (moveDirection == 3) {
             actor.velocity.y = -1;
+            actor.velocity.x = 0;
         }
+
+
+        if (actor.position.y > ground) {
+            actor.position.y = ground;
+            moveDirection = rand() % 4;
+        }
+
+        if (actor.position.y < 0) {
+            actor.position.y = 0;
+            moveDirection = rand() % 4;
+		}
+        if (actor.position.x < 0) {
+            actor.position.x = 0;
+            moveDirection = rand() % 4;
+        }
+        if (actor.position.x > side) {
+            actor.position.x = side;
+            moveDirection = rand() % 4;
+        }
+       
+
+ 
         // actor.velocity.x = random.normal();
         // actor.velocity.y = random.normal();
         // glm::normalize(actor.velocity);
@@ -75,20 +108,18 @@ namespace GameLib {
                     sidesTouching[3] = true;
                 }
 
-                //std::cout << (sidesTouching[0]) << (sidesTouching[1]) << (sidesTouching[2]) << (sidesTouching[3]) << std::endl;
+                // std::cout << (sidesTouching[0]) << (sidesTouching[1]) << (sidesTouching[2]) << (sidesTouching[3]) << std::endl;
                 if (sidesTouching[0] && sidesTouching[1] && sidesTouching[2] && sidesTouching[3]) {
                     touching = true;
-                    
+                    std::cout << "Touching!" << std::endl;
                     if (actor.position.x > i->position.x) {
                         actor.position.x = i->position.x + boxSize;
-                    }
-                    else if (actor.position.x < i->position.x) {
+                    } else if (actor.position.x < i->position.x) {
                         actor.position.x = i->position.x - boxSize;
                     }
                     if (actor.position.y > i->position.y) {
                         actor.position.y = i->position.y + boxSize;
-                    }
-                    else if (actor.position.y < i->position.y) {
+                    } else if (actor.position.y < i->position.y) {
                         actor.position.y = i->position.y - boxSize;
                     }
                     actor.actorCollide();

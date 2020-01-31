@@ -22,7 +22,7 @@ namespace GameLib {
 
         virtual char charDesc() const { return charDesc_; }
 
-		virtual void actorCollide() {}
+        virtual void actorCollide() {}
 
         // Called whenever the object is introduced into the game
         virtual void beginPlay();
@@ -84,8 +84,10 @@ namespace GameLib {
         // current velocity
         glm::vec3 velocity;
 
-		// maximum speed
+        // maximum speed
         float speed{ 16.0f };
+
+
     protected:
         std::string _updateDesc() override { return { "Actor" }; }
         std::string _updateInfo() override { return { "Actor" }; }

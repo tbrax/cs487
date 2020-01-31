@@ -47,6 +47,7 @@ namespace GameLib {
 
     private:
         int moveDirection = 0;
+        int moveChangeTimer = 0;
     };
 
     class SimplePhysicsComponent : public PhysicsComponent {
