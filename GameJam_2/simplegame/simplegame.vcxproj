@@ -24,6 +24,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NewtonPhysicsComponent.cpp" />
+    <ClCompile Include="RunInputComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />
@@ -34,6 +35,7 @@
     <ClInclude Include="FlyPhysicsComponent.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="NewtonPhysicsComponent.hpp" />
+    <ClInclude Include="RunInputComponent.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

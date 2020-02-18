@@ -3,6 +3,7 @@
 #include "NewtonPhysicsComponent.hpp"
 #include "FlyPhysicsComponent.hpp"
 #include <gamelib_story_screen.hpp>
+#include "RunInputComponent.hpp"
 
 constexpr int SOUND_BLIP = 6;
 
@@ -104,6 +105,7 @@ void Game::initLevel(int levelNum) {
 	auto NewDungeonActor = []() { return std::make_shared<GameLib::DungeonActorComponent>(); };
 	auto NewInput = []() { return std::make_shared<GameLib::SimpleInputComponent>(); };
 	auto NewRandomInput = []() { return std::make_shared<GameLib::RandomInputComponent>(); };
+	auto NewRunInput = []() { return std::make_shared<GameLib::RunInputComponent>(); };
 	auto NewActor = []() { return std::make_shared<GameLib::ActorComponent>(); };
 	auto NewPhysics = []() { return std::make_shared<GameLib::SimplePhysicsComponent>(); };
 	auto NewNewtonPhysics = []() { return std::make_shared<GameLib::FlyPhysicsComponent>(); };
@@ -115,15 +117,15 @@ void Game::initLevel(int levelNum) {
 	float speed = (float)graphics.getTileSizeX();
 
 	GameLib::ActorPtr actor;
-	actor = _makeActor(cx, cy, 1, 2, NewInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
+	actor = _makeActor(cx, cy, 5, 4, NewInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
 	world.addDynamicActor(actor);
 
-	/*actor = _makeActor(cx + 6, cy + 4, 4, 32, nullptr, NewDungeonActor(), NewPhysics(), NewGraphics());
+	actor = _makeActor(cx + 6, cy + 4, 4, 32, NewRunInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
+	world.addDynamicActor(actor);
+	/*
+	actor = _makeActor(cx + 10, cy - 4, 4, 32, nullptr, NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
 	world.addStaticActor(actor);
-
-	actor = _makeActor(cx + 10, cy - 4, 4, 32, nullptr, NewDungeonActor(), NewPhysics(), NewGraphics());
-	world.addStaticActor(actor);
-
+	
 	actor = _makeActor(16, 6, 4, 100, NewRandomInput(), NewDungeonActor(), NewPhysics(), NewGraphics());
 	world.addDynamicActor(actor);
 

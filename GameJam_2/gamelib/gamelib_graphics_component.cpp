@@ -2,6 +2,7 @@
 #include <gamelib_graphics_component.hpp>
 #include <gamelib_locator.hpp>
 
+
 namespace GameLib {
 	void debugDraw(Actor& a) {
 		World* world = Locator::getWorld();
@@ -102,6 +103,7 @@ namespace GameLib {
 		int id = actor.anim.currentFrame();
 		if (!id)
 			id = actor.spriteId();
+
 		graphics.draw(actor.sprite.libId, id, (int)pos.x, (int)pos.y, actor.sprite.flipFlags());
 	}
 
