@@ -17,8 +17,11 @@ namespace GameLib {
 		void endOverlap(Actor& a, Actor& b) override;
 		void beginTriggerOverlap(Actor& a, Actor& b) override;
 		void endTriggerOverlap(Actor& a, Actor& b) override;
+		void setPlayerType(int a) override;
+		int getPlayerType() override;
 
 	private:
+		int playerType{ 0 };
 		struct STATICINFO {
 			bool horizontal{false};
 			float movement{2.0f};

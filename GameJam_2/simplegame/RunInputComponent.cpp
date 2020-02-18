@@ -13,4 +13,8 @@ namespace GameLib {
 		if (axis2)
 			actor.velocity.y = axis2->getAmount();
 	}
+
+	void RunInputComponent::setRun(Actor& actor) {
+		*runActor = actor;
+	}
 }

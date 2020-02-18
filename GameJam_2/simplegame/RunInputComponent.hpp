@@ -9,7 +9,17 @@ namespace GameLib {
 	class RunInputComponent : public InputComponent {
 	public:
 		virtual ~RunInputComponent() {}
+
 		void update(Actor& actor) override;
+		void setRun(Actor& actor);
+		RunInputComponent():count(0),runActor(nullptr) { 
+
+		}
+								
+		
+	private:
+		int count{ 0 };
+		Actor* runActor;
 	};
 }
 

@@ -118,10 +118,13 @@ void Game::initLevel(int levelNum) {
 
 	GameLib::ActorPtr actor;
 	actor = _makeActor(cx, cy, 5, 4, NewInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
+	actor->actorComponent()->setPlayerType(1);
 	world.addDynamicActor(actor);
 
-	actor = _makeActor(cx + 6, cy + 4, 4, 32, NewRunInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
+	actor = _makeActor(cx + 6, cy + 4, 4, 32, NewRandomInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
+	actor->actorComponent()->setPlayerType(2);
 	world.addDynamicActor(actor);
+	
 	/*
 	actor = _makeActor(cx + 10, cy - 4, 4, 32, nullptr, NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
 	world.addStaticActor(actor);

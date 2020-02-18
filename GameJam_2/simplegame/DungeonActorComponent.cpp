@@ -8,6 +8,15 @@ namespace GameLib {
 	extern void debugDrawSweptAABB(Actor& a);
 	extern float SweptAABB(Actor& a, Actor& b, glm::vec3& normal);
 
+	void DungeonActorComponent::setPlayerType(int a)
+	{
+		playerType = a;
+	}
+
+	int DungeonActorComponent::getPlayerType()
+	{
+		return playerType;
+	}
 
 	void DungeonActorComponent::update(Actor& a, World& w) {
 		// debugDraw(a);
@@ -106,6 +115,16 @@ namespace GameLib {
 			a.velocity = cos_theta * tangent;
 		}
 		a.position += a.velocity;
+
+		if (a.actorComponent()->getPlayerType() == 1)
+		{ 
+			if (b.actorComponent()->getPlayerType() == 2)
+			{
+				a.position.x = 0;
+			}
+		
+		}
+		
 	}
 
 

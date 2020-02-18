@@ -27,6 +27,8 @@ namespace GameLib {
 		virtual void beginTriggerOverlap(Actor& a, Actor& b) {}
 		// endTriggerOverlap() is called when the trigger is not overlapped by an actor
 		virtual void endTriggerOverlap(Actor& a, Actor& b) {}
+		virtual void setPlayerType(int a) {}
+		virtual int getPlayerType() { return 0; }
 	};
 
 	class RandomActorComponent : public ActorComponent {

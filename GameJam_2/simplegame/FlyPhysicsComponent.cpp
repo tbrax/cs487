@@ -47,7 +47,7 @@ namespace GameLib {
 		float pi = 3.1415926;
 		int deg = int(direction * (180 / pi));
 		deg = deg % 360;
-		a.setSprite(0, 7);
+		a.setSprite(0, 8);
 		vold.x = cos(direction)*a.speed;
 		vold.y = sin(direction)*a.speed;
 		glm::vec3 vnew = vold + a.dt * acceleration;
