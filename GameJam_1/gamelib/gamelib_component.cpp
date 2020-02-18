@@ -111,7 +111,7 @@ namespace GameLib {
                 // std::cout << (sidesTouching[0]) << (sidesTouching[1]) << (sidesTouching[2]) << (sidesTouching[3]) << std::endl;
                 if (sidesTouching[0] && sidesTouching[1] && sidesTouching[2] && sidesTouching[3]) {
                     touching = true;
-                    std::cout << "Touching!" << std::endl;
+                    //std::cout << "Touching!" << std::endl;
                     if (actor.position.x > i->position.x) {
                         actor.position.x = i->position.x + boxSize;
                     } else if (actor.position.x < i->position.x) {
