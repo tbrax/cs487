@@ -19,9 +19,15 @@ namespace GameLib {
 		void endTriggerOverlap(Actor& a, Actor& b) override;
 		void setPlayerType(int a) override;
 		int getPlayerType() override;
+		void setPlayerHealth(int a) override;
+		int getPlayerHealth() override;
+		void setPlayerScore(int a) override;
+		int getPlayerScore() override;
 
 	private:
 		int playerType{ 0 };
+		int playerScore{ 0 };
+		int playerHealth{ 5 };
 		struct STATICINFO {
 			bool horizontal{false};
 			float movement{2.0f};

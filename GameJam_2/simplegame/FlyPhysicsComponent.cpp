@@ -43,11 +43,45 @@ namespace GameLib {
 		glm::vec3 vold = a.physicsInfo.v;
 		//vold.x = a.velocity.x;
 		//vold.y = a.velocity.y;
-		direction += a.velocity.x/200;
+		direction += a.velocity.x / 200;
 		float pi = 3.1415926;
 		int deg = int(direction * (180 / pi));
-		deg = deg % 360;
-		a.setSprite(0, 8);
+		deg = ((deg) % 360);
+		if (deg < 0)
+		{
+			deg += 360;
+		}
+
+
+		
+
+		int tp = a.actorComponent()->getPlayerType();
+		if (tp == 1)
+		{
+			//std::cout << deg << std::endl;
+			if (deg > 90 && deg < 180)
+			{
+				a.setSprite(0, 1);
+			}
+			else if (deg > 180 && deg < 270)
+			{
+				a.setSprite(0, 2);
+			}
+			else if (deg > 270 && deg < 3600)
+			{
+				a.setSprite(0, 3);
+			}
+			else
+			{
+				a.setSprite(0, 0);
+			}
+			
+		}
+		else if (tp == 2)
+		{
+
+		}
+		
 		vold.x = cos(direction)*a.speed;
 		vold.y = sin(direction)*a.speed;
 		glm::vec3 vnew = vold + a.dt * acceleration;

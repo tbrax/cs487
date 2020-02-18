@@ -12,10 +12,25 @@ namespace GameLib {
 	{
 		playerType = a;
 	}
-
 	int DungeonActorComponent::getPlayerType()
 	{
 		return playerType;
+	}
+	void DungeonActorComponent::setPlayerHealth(int a)
+	{
+		playerHealth = a;
+	}
+	int DungeonActorComponent::getPlayerHealth()
+	{
+		return playerHealth;
+	}
+	void DungeonActorComponent::setPlayerScore(int a)
+	{
+		playerScore = a;
+	}
+	int DungeonActorComponent::getPlayerScore()
+	{
+		return playerScore;
 	}
 
 	void DungeonActorComponent::update(Actor& a, World& w) {
@@ -120,7 +135,21 @@ namespace GameLib {
 		{ 
 			if (b.actorComponent()->getPlayerType() == 2)
 			{
-				a.position.x = 0;
+				int prevScore = a.actorComponent()->getPlayerScore();
+				a.actorComponent()->setPlayerScore(prevScore + 1);
+				b.position.x = 1 + random.positive() * (Locator::getWorld()->worldSizeX - 2);
+				b.position.y = 1 + random.positive() * (Locator::getWorld()->worldSizeY - 2);
+				
+				//score = 0;
+			}
+
+			else if (b.actorComponent()->getPlayerType() == 3)
+			{
+				int prevScore = a.actorComponent()->getPlayerHealth();
+				a.actorComponent()->setPlayerHealth(prevScore - 1);
+				b.position.x = 1 + random.positive() * (Locator::getWorld()->worldSizeX - 2);
+				b.position.y = 1 + random.positive() * (Locator::getWorld()->worldSizeY - 2);
+				//score = 0;
 			}
 		
 		}

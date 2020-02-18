@@ -4,6 +4,7 @@
 #include "FlyPhysicsComponent.hpp"
 #include <gamelib_story_screen.hpp>
 #include "RunInputComponent.hpp"
+#include <stdio.h>
 
 constexpr int SOUND_BLIP = 6;
 
@@ -52,17 +53,15 @@ void Game::main(int argc, char** argv) {
 	//showIntro();
 	worldPath = context.findSearchPath("World0.txt");
 
-	while (true)
-	{
 		world.load(worldPath);
 		initLevel(1);
 		if (playGame()) {
 			showWonEnding();
 		}
 		else {
-			break;
+			showLostEnding();
 		}
-	}
+	
 	kill();
 }
 
@@ -74,7 +73,7 @@ void Game::loadData() {
 	SDL_Texture* testPNG = context.loadImage("godzilla.png");
 	SDL_Texture* testJPG = context.loadImage("parrot.jpg");
 	graphics.setTileSize({ 32, 32 });
-	int spriteCount = context.loadTileset(0, 32, 32, "Tiles32x32.png");
+	int spriteCount = context.loadTileset(0, 32, 32, "Tiles(0)32x32.png");
 	if (!spriteCount) {
 		HFLOGWARN("Tileset not found");
 	}
@@ -117,12 +116,40 @@ void Game::initLevel(int levelNum) {
 	float speed = (float)graphics.getTileSizeX();
 
 	GameLib::ActorPtr actor;
-	actor = _makeActor(cx, cy, 5, 4, NewInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
+	actor = _makeActor(cx, cy, 5, 0, NewInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
 	actor->actorComponent()->setPlayerType(1);
 	world.addDynamicActor(actor);
 
-	actor = _makeActor(cx + 6, cy + 4, 4, 32, NewRandomInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
+	actor = _makeActor(cx + 6, cy + 4, 4, 41, NewRandomInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
 	actor->actorComponent()->setPlayerType(2);
+	world.addDynamicActor(actor);
+
+	actor = _makeActor(cx + 6, cy + 4, 4, 41, NewRandomInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
+	actor->actorComponent()->setPlayerType(2);
+	world.addDynamicActor(actor);
+
+	actor = _makeActor(cx - 6, cy - 4, 4, 41, NewRandomInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
+	actor->actorComponent()->setPlayerType(2);
+	world.addDynamicActor(actor);
+
+	actor = _makeActor(cx - 5, cy - 5, 5, 42, NewRandomInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
+	actor->actorComponent()->setPlayerType(3);
+	world.addDynamicActor(actor);
+
+	actor = _makeActor(cx - 5, cy + 5, 5, 42, NewRandomInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
+	actor->actorComponent()->setPlayerType(3);
+	world.addDynamicActor(actor);
+
+	actor = _makeActor(cx + 5, cy + 5, 5, 42, NewRandomInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
+	actor->actorComponent()->setPlayerType(3);
+	world.addDynamicActor(actor);
+
+	actor = _makeActor(cx - 10, cy + 10, 5, 42, NewRandomInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
+	actor->actorComponent()->setPlayerType(3);
+	world.addDynamicActor(actor);
+
+	actor = _makeActor(cx + 10, cy + 10, 5, 42, NewRandomInput(), NewDungeonActor(), NewNewtonPhysics(), NewGraphics());
+	actor->actorComponent()->setPlayerType(3);
 	world.addDynamicActor(actor);
 	
 	/*
@@ -293,7 +320,22 @@ void Game::showIntro() {
 }
 
 
-void Game::showWonEnding() {}
+void Game::showWonEnding() {
+	GameLib::StoryScreen ss;
+	ss.setBlipSound(SOUND_BLIP);
+	ss.setFont(0, "URWClassico-Bold.ttf", 2.0f);
+	ss.setFont(1, "URWClassico-Bold.ttf", 1.0f);
+	ss.setFontStyle(0, 1, ss.HALIGN_CENTER, ss.VALIGN_BOTTOM);
+	ss.setFontStyle(1, 0, ss.HALIGN_CENTER, ss.VALIGN_CENTER);
+	ss.newFrame(1000, 0, 0, 0, 0, GameLib::BLACK);
+	ss.newFrame(5000, GameLib::BLACK, 3, GameLib::RED, 2, GameLib::BLUE);
+	ss.frameHeader(0, "The End");
+	ss.frameLine(1, "You Win!!");
+	ss.newFrame(0, 0, 0, 0, 0, GameLib::BLACK);
+	ss.play();
+
+
+}
 
 
 void Game::showLostEnding() {
@@ -304,9 +346,9 @@ void Game::showLostEnding() {
 	ss.setFontStyle(0, 1, ss.HALIGN_CENTER, ss.VALIGN_BOTTOM);
 	ss.setFontStyle(1, 0, ss.HALIGN_CENTER, ss.VALIGN_CENTER);
 	ss.newFrame(1000, 0, 0, 0, 0, GameLib::BLACK);
-	ss.newFrame(5000, GameLib::BLACK, 3, GameLib::RED, 2, GameLib::YELLOW);
+	ss.newFrame(5000, GameLib::BLACK, 3, GameLib::BLUE, 2, GameLib::RED);
 	ss.frameHeader(0, "The End");
-	ss.frameLine(1, "Oh! This game must not be finished!");
+	ss.frameLine(1, "You were eaten!! :(");
 	ss.newFrame(0, 0, 0, 0, 0, GameLib::BLACK);
 	ss.play();
 }
@@ -362,6 +404,22 @@ bool Game::playGame() {
 	while (!context.quitRequested && !gameOver) {
 		updateTiming();
 
+
+		int sc = world.dynamicActors[0]->actorComponent()->getPlayerScore();
+		int hc = world.dynamicActors[0]->actorComponent()->getPlayerHealth();
+		if (sc >= 10)
+		{
+			gameWon = true;
+			gameOver = true;
+		}
+
+		if (hc <= 0)
+		{
+			gameWon = false;
+			gameOver = true;
+		}
+
+
 		context.getEvents();
 		input.handle();
 		_debugKeys();
@@ -408,15 +466,17 @@ void Game::drawWorld() {
 
 
 void Game::drawHUD() {
+	int sc = world.dynamicActors[0]->actorComponent()->getPlayerScore();
+	int hc = world.dynamicActors[0]->actorComponent()->getPlayerHealth();
+	//std::cout << sc << std::endl;
+	//world.dynamicActors()[0]->actor
+	char scorestr[64] = { 5 };
+	snprintf(scorestr, 64, "Score: %3.0f", float(sc));
 
-
-	char scorestr[64] = { 0 };
-	snprintf(scorestr, 64, "Score: %3.0f", score);
-
-	minchofont.draw(0, 0, scorestr, GameLib::Red, GameLib::Font::SHADOWED);
+	minchofont.draw(0, 0, scorestr, GameLib::Yellow, GameLib::Font::SHADOWED);
 
 	char healthstr[64] = { 0 };
-	snprintf(healthstr, 64, "Health: %3.0f", health);
+	snprintf(healthstr, 64, "Health: %3.0f", float(hc));
 
 	gothicfont.draw((int)graphics.getWidth(),
 		0,

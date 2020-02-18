@@ -29,6 +29,10 @@ namespace GameLib {
 		virtual void endTriggerOverlap(Actor& a, Actor& b) {}
 		virtual void setPlayerType(int a) {}
 		virtual int getPlayerType() { return 0; }
+		virtual void setPlayerHealth(int a) {}
+		virtual int getPlayerHealth() { return 0; }
+		virtual void setPlayerScore(int a) {}
+		virtual int getPlayerScore() { return 0; }
 	};
 
 	class RandomActorComponent : public ActorComponent {
