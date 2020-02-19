@@ -480,7 +480,7 @@ void Game::drawHUD() {
 
 	gothicfont.draw((int)graphics.getWidth(),
 		0,
-		"Hello World!",
+		"Catch blue birds. Run from red ones!",
 		GameLib::Red,
 		GameLib::Font::HALIGN_RIGHT | GameLib::Font::SHADOWED);
 
@@ -488,12 +488,12 @@ void Game::drawHUD() {
 	int y = (int)graphics.getCenterY() >> 1;
 	float s = GameLib::wave(t1, 1.0f);
 	SDL_Color c = GameLib::MakeColorHI(7, 4, s, false);
-	minchofont.draw(x,
-		y,
-		"Collisions",
-		c,
-		GameLib::Font::SHADOWED | GameLib::Font::HALIGN_CENTER | GameLib::Font::VALIGN_CENTER | GameLib::Font::BOLD |
-			GameLib::Font::ITALIC);
+	//minchofont.draw(x,
+	//	y,
+	//	"Collisions",
+	//	c,
+	//	GameLib::Font::SHADOWED | GameLib::Font::HALIGN_CENTER | GameLib::Font::VALIGN_CENTER | GameLib::Font::BOLD |
+	//		GameLib::Font::ITALIC);
 
 	minchofont.draw(0,
 		(int)graphics.getHeight() - 2,
